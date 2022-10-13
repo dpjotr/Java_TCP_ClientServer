@@ -6,8 +6,6 @@ import java.net.Socket;
 import java.util.*;
 
 public class TCPClient implements  AutoCloseable, Runnable{
-
-
     public String getName() {
         return name;
     }
@@ -22,13 +20,9 @@ public class TCPClient implements  AutoCloseable, Runnable{
     private OutputStream output;
     private LinkedList<Registration> registrations;
 
-
     public TCPClient(String n) throws Exception {
         name=n;
-
     }
-
-
 
     private  boolean connection(String host, int port) throws IOException, InterruptedException {
         socket = new Socket(host, port);
@@ -40,8 +34,7 @@ public class TCPClient implements  AutoCloseable, Runnable{
         input = socket.getInputStream();
         byte[] buf= new byte[Services.size];
         input.read(buf);
-        Object incomeMessage=Services.convertObjectFromBytes(buf);
-        //System.out.println((String)incomeMessage);
+        Object incomeMessage = Services.convertObjectFromBytes(buf);
 
         output.write(("Show regs").getBytes());
         output.flush();
@@ -53,12 +46,9 @@ public class TCPClient implements  AutoCloseable, Runnable{
 
             Date date = new Date(System.currentTimeMillis());
 
-
-            if(!registrations.isEmpty())
-            {
+            if(!registrations.isEmpty()){
                 String info=("Registations for "+name+" "+date+ ": "+"\n");
-                for (var x:registrations )
-                {
+                for (var x:registrations ){
                     info+=(x.getUser()+"\\"+x.getDate()+"\n");
                 }
                 System.out.println(info);
@@ -79,14 +69,15 @@ public class TCPClient implements  AutoCloseable, Runnable{
     public void run() {
         try {
             connection(InetAddress.getLocalHost().getHostAddress(), Services.port);
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             e.printStackTrace();
-        } catch (InterruptedException e) {
+        }
+        catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
     public  static void main(String[]args) throws Exception {
-
         for(int m=0;m<8;m++)
                 for(int i=0;i<20;i++)
                     try (TCPClient client = new TCPClient("Client"+i)){

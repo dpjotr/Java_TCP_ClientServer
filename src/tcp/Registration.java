@@ -5,8 +5,11 @@ import java.util.Date;
 
 public class Registration implements Serializable {
 
-    private Date date;		// Дата регистрации
-    private String user;	// Идентификатор пользователя
+    // Registration date
+    private Date date;
+
+    // User identificator
+    private String user;
 
     public Registration(Date date, String user) throws Exception {
         if (date == null || user == null || user.trim().isEmpty()) {
